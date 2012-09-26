@@ -1,8 +1,12 @@
 #!/usr/bin/python
+# -*- coding: iso-8859-1 -*-
 import xlrd
+import codecs
 import sys, getopt
+import locale
 
-# Argument 1 : Fichier excel en entree
+
+# Argument 1 : Fichier excel en entrée
 # Argument 2 : Fichier resultat en sortie
 
 # Developpement : Denis Verissimo
@@ -43,8 +47,7 @@ def main(argv):
 	# ouverture du fichier Excel 
 	wb = xlrd.open_workbook(inputfile)
 	# ouvre le fichier resultat en ecriture (writing)
-	f = open(outputfile, 'w')
-
+	f = codecs.open(outputfile, encoding='cp1252', mode='w')
 
 	# feuilles dans le classeur
 	for sheetnum in range(wb.nsheets):
@@ -53,7 +56,7 @@ def main(argv):
 			f.write(sh.name) #Nom de l'onglet Excel
 			f.write(';')
 			for colnum in range(sh.ncols): #Colonnes du classeur
-				f.write(str(sh.cell(rownum,colnum).value)) #Recopie de la cellule
+				f.write(unicode(sh.cell(rownum,colnum).value)) #Recopie de la cellule
 				f.write(';')
 
 			f.write('\r') #Retour chariot (fin de ligne)
